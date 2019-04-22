@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>moreImageGuess</title>
+  <style>
+    body {
+      margin: 20px;
+      width: 600px;
+    }  
+    img {
+      margin: 20px;
+      width: 150px;
+    }  
+  </style>
+
+
+  <script>
+    //为了讲解原理，这里我们依然将 JS 代码放在此处。
+    window.onload = init;
+    function init() {
+    //var image = document.getElementById("zero");
+    //image.onclick = showanswer;
+    //先删除获取图像 zero 并设置其单击事件“处理程序”的代码；
+
+      var images = document.getElementsByTagName("img"); 
+      //使用标签名 img 来获取网页中的元素。这将查找并返回网页中的所有图像。我们将返回的图像存储在变量 images 中。
+      //⚠️注意 getElementsByTagName 的格式。
+      //⚠️document.getElementsByTagName("img") 返回的是类似于“数组”的对象列表（Nodelist 对象），它类似于“数组”，但又不完全相同。
+      //⚠️Nodelist 是一个 Node 集合，而 Node 指的其实就是 DOM 树中的 element 对象。
+      //⚠️我们可以像“数组”一样迭代 Node 集合，但与“数组”的相似之处仅限于以下两点：①使用 length 属性获取其长度；②再通过用 [] 括起的“索引”来访问 Nodelist 的每个项目。
+
+      for(var i = 0; i < images.length; i++) {
+        images[i].onclick = showAnswer;
+      }
+      //然后，迭代 images ，依次将每幅图像的单击处理程序设置为 showAnswer 。这样就将每幅图像的属性 onclick 都设置成了处理程序 showAnswer 。                            
+    }
+    function showAnswer(eventObj) {
+      var image = eventObj.target;
+      //我们使用“事件对象”获取到了“触发事件元素”——被单击的“图像元素”。
+
+      //💡我们注意到 HTML 中每个图像元素的 id 都对应清晰版图像的名称——不包括扩展名 .png 。如果能够获取这个 id ，再加上扩展名 .png 后，就能得到相应清晰版图像的名称，从而将图像元素的 src 属性改为清晰版图像的名称了。
+      var name = image.id;  //因此，我们可以使用该“图像元素对象”的 id 属性来获取清晰图像的名称。
+      name = name + ".png"; 
+      image.src = name;  //最后将“图像元素”的 src 属性设置为该名称。
+      //修改“图像元素”的 src 属性后，浏览器将立即获取指定的新图像，并在模糊图像的位置显示它。
+    }
+
+  </script>
+
+</head>
+<body>
+  <img id="zero" src="zeroblur.png"> 
+  <img id="one" src="oneblur.png">
+  <img id="two" src="twoblur.png">
+  <img id="three" src="threeblur.png">
+  <img id="four" src="fourblur.png">
+  <img id="five" src="fiveblur.png">
+</body>
+</html>
